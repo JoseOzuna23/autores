@@ -7,6 +7,7 @@ const crearAutores = (req, res)=>{
         res.json(resultado)
     }).catch((error)=>{
         console.log(error)
+        res.status(400).json(error)
 
     })
 }
@@ -21,7 +22,7 @@ const obtenerAutores = (req, res)=>{
 }
 
 const editarAutores = (req, res)=>{
-    Autores.updateOne({_id: req.params.id}, req.body, {runValidators:true})
+    Autores.updateOne({_id: req.params.id}, req.body,{runValidators:true})
     .then((resultado)=>{
         console.log(req.body)
         res.json(resultado)

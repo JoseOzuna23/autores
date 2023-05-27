@@ -37,7 +37,7 @@ const ListaAutores = () => {
                 console.log(res)
                 window.location.reload(); 
                 navigate('/')
-                console.log("mostrar", res.data)
+                
             }).catch((error) => {
                 console.log(error)                
             })

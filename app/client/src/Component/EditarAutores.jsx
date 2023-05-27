@@ -8,6 +8,7 @@ import '../vista/estilo.css'
 
 const EditarAutores = () => {
     const [name, setName] = useState('')
+    const [errors, setErrors] = useState({})
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -19,7 +20,7 @@ const EditarAutores = () => {
                 console.log(res)
                 setName(res.data.name)
                 console.log(res.data.name)
-                
+
             }).catch((error) => {
                 console.log(error)
             })
@@ -33,33 +34,34 @@ const EditarAutores = () => {
         }).then((res) => {
             console.log(res)
             navigate('/')
-        }).then((error) => {
+        }).catch((error) => {
             console.log(error)
+            setErrors(error.response.data.errors)
 
 
         })
 
     }
-        return (
-            <div className=' col-4 contenedor  '>
+    return (
+        <div className=' col-4 contenedor  '>
 
-                <h4 className='mt-4'> Editar Producto</h4>
-                <Link to={`/`} className='d-block ' ><h5> Inicio</h5> </Link>  
-                <form onSubmit={prevenirCarga} className='border text-center '>
-                    <label htmlFor='' className='form-label mt-3 '> Nombre del autor </label>
-                    <input type="text" value={name} className='form-control  ' onChange={(e) => setName(e.target.value)}/>
-                    <div className='editar p-2 justify-content-center '>
-                    
-                    <button className='btn btn-danger me-3 '> Actualizar Autor</button>       
-                    <Link to={`/`} className='d-block' > <button className='btn btn-success'>Cancelar</button></Link>     
-                    </div>         
-                </form> 
-                
-                
+            <h4 className='mt-4'> Editar Producto</h4>
+            <Link to={`/`} className='d-block ' ><h5> Inicio</h5> </Link>
+            <form onSubmit={prevenirCarga} className='border text-center '>
+                <label htmlFor='' className='form-label mt-3 '> Nombre del autor </label>
+                <input type="text" value={name} className='form-control  ' onChange={(e) => setName(e.target.value)} />
+                <p> {errors.name ? <span className='text-danger'> {errors.name.message}</span> : null}</p>
+                <div className='editar p-2 justify-content-center '>
+                    <button className='btn btn-danger me-3 '> Actualizar Autor</button>
+                    <Link to={`/`} className='d-block' > <button className='btn btn-success'>Cancelar</button></Link>
+                </div>
+            </form>
 
 
-            </div>
-        )
-    }
 
-    export default EditarAutores
+
+        </div>
+    )
+}
+
+export default EditarAutores
